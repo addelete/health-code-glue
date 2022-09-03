@@ -6,6 +6,7 @@ export interface TextData {
   place: string;
   color: string;
   fontSize: number;
+  watermarkOpacity: number;
 }
 
 export type LayoutData = {
@@ -62,7 +63,9 @@ export const useSettingStore = defineStore("setting", {
         text: {
           place: Object.keys(textPlaceMap)[0],
           color: textColorOptions[0],
-          fontSize: 100
+          fontSize: 100,
+          watermarkOpacity: 50,
+          content: '',
         },
         layout: {
           type: layoutOptions[0],

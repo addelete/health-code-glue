@@ -1,9 +1,8 @@
 
 
 <template>
-  <button @tap="openPopup">设置</button>
+  <button @tap="openPopup" class="primary">设置</button>
   <popup title="设置" :open="popupOpen" @close="popupOpen = false">
-    <!-- <text>{{JSON.stringify(editingData)}}</text> -->
     <view v-if="editingData">
       <view class="form-item">
         <label class="form-item__label">图片排列</label>
@@ -31,7 +30,6 @@
             v-model="editingData.text.color"
             :options="textColorOptions"
           />
-          <view class="helper">合图上的文字颜色</view>
         </view>
       </view>
       <view class="form-item">
@@ -41,7 +39,6 @@
             v-model="editingData.text.place"
             :options="textPlaceOptions"
           />
-          <view class="helper">合图上的文字位置</view>
         </view>
       </view>
       <view class="form-item">
@@ -52,7 +49,17 @@
             v-model="editingData.text.fontSize"
             placeholder="请输入字号"
           />
-          <view class="helper">合图上的文字字号大小</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <label class="form-item__label">水印透明度</label>
+        <view class="form-item__control">
+          <input
+            type="number"
+            v-model="editingData.text.watermarkOpacity"
+            placeholder="请输入水印透明度"
+          />
+          <view class="helper">范围0-100，越小越透明</view>
         </view>
       </view>
       <view class="form-item">
@@ -97,24 +104,27 @@ const openPopup = () => {
 // 确定并关闭设置弹窗
 const submitPopup = () => {
   popupOpen.value = false;
-  settingStore.updateSettings(editingData.value as SettingsData);
-  editingData.value = undefined;
+  setTimeout(() => {
+    settingStore.updateSettings(editingData.value as SettingsData);
+    editingData.value = undefined;
+  }, 100);
 };
 </script>
 
 <style lang="scss">
 .form-item {
   display: flex;
-  padding: 18px 0;
+  padding: 10px 0;
   &__label {
     height: 70px;
     line-height: 70px;
-    width: 160px;
+    width: 180px;
     flex-shrink: 0;
     font-size: 32px;
   }
   &__control {
     flex: 1;
+    
     .helper {
       font-size: 24px;
       margin-top: 8px;
